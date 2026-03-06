@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using static DL.DTOs;
 
 namespace DL;
 
@@ -14,7 +15,8 @@ public partial class AreyesDiciembreContext : DbContext
         : base(options)
     {
     }
-    public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTOs { get; set; }
+    public virtual DbSet<DTOs.UsuarioGetAllDTO> UsuarioGetAllDTO { get; set; }
+    public virtual DbSet<DTOs.UsuarioGetByIdDTO> UsuarioGetByIdDTO { get; set; }
     public virtual DbSet<Colonium> Colonia { get; set; }
 
     public virtual DbSet<Direccion> Direccions { get; set; }
@@ -173,50 +175,12 @@ public partial class AreyesDiciembreContext : DbContext
         modelBuilder.Entity<UsuarioGetAllDTO>(entity =>
         {
             entity
-                 .HasNoKey()
-                 .ToView("UsuarioGetAll");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ApellidoMaterno)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ApellidoPaterno)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.FechaNacimiento).HasColumnType("datetime");
-            entity.Property(e => e.UserName)
-               .HasMaxLength(50)
-               .IsUnicode(false);
-            entity.Property(e => e.Password)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Email)
-                .HasMaxLength(254)
-                .IsUnicode(false);
-            entity.Property(e => e.Sexo)
-                .HasMaxLength(2)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.Telefono)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Celular)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-
-            entity.Property(e => e.Curp)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("CURP");
-            entity.Property(e => e.RolNombre)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            
-            
-            
-           
-            
+                 .HasNoKey();
+        });
+        modelBuilder.Entity<UsuarioGetByIdDTO>(entity =>
+        {
+            entity
+                 .HasNoKey();
         });
         modelBuilder.Entity<VwUsuarioGetAll>(entity =>
         {
@@ -285,59 +249,6 @@ public partial class AreyesDiciembreContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-    public class UsuarioGetAllDTO
-    {
-        public int IdUsuario { get; set; }
-
-        public string Nombre { get; set; } = null!;
-
-        public string ApellidoPaterno { get; set; } = null!;
-
-        public string? ApellidoMaterno { get; set; }
-
-        public DateTime FechaNacimiento { get; set; }
-
-        public string UserName { get; set; } = null!;
-
-        public string Password { get; set; } = null!;
-
-        public string Email { get; set; } = null!;
-
-        public string Sexo { get; set; } = null!;
-
-        public string Telefono { get; set; } = null!;
-
-        public string? Celular { get; set; }
-
-        public bool? Estatus { get; set; }
-
-        public string? Curp { get; set; }
-
-        public byte[]? Imagen { get; set; }
-
-        public string RolNombre { get; set; } = null!;
-    }
-    //public static UsuarioGetAllDTO ConvertToDTO(DL.Usuario usuario, DL.Rol rol)
-    //{
-    //    return new UsuarioGetAllDTO
-    //    {
-    //        IdUsuario = usuario.IdUsuario,
-    //        Nombre = usuario.Nombre,
-    //        ApellidoPaterno = usuario.ApellidoPaterno,
-    //        ApellidoMaterno = usuario.ApellidoMaterno,
-    //        FechaNacimiento = usuario.FechaNacimiento,
-    //        UserName = usuario.UserName,
-    //        Password = usuario.Password,
-    //        Email = usuario.Email,
-    //        Sexo = usuario.Sexo,
-    //        Telefono = usuario.Telefono,
-    //        Celular = usuario.Celular,
-    //        Estatus = usuario.Estatus,
-    //        Curp = usuario.Curp,
-    //        Imagen = usuario.Imagen,
-    //        RolNombre = rol.Nombre
-    //    };
-    //}
-
+    
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

@@ -26,7 +26,7 @@ namespace ML
 
         public string? Celular { get; set; }
 
-        public bool Estatus { get; set; }
+        public bool? Estatus { get; set; }
         
         public string? CURP { get; set; }
         
