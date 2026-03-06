@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace DL
 {
-    public class DTOs
-    {
+    
         public class UsuarioGetAllDTO
         {
             public int IdUsuario { get; set; }
@@ -75,5 +74,5 @@ namespace DL
             public int? IdMunicipio { get; set; }
             public int? IdEstado { get; set; }
         }
-    }
+    
 }

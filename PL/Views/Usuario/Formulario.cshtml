@@ -10,144 +10,152 @@
     <meta name="viewport" content="with=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/StyleSheet.css" />
 </head>
-<div class="container">
-    <div class="containersR mx-auto ">
-        @using (Html.BeginForm("Formulario", "Usuario", FormMethod.Post))
-        {
-            <div class="col-xxl-6 ms-2" >
-                <div class="row">
-                    @Html.HiddenFor(model => model.IdUsuario)
+<div class="container col-12">
 
-                    <label class="text-center col-12 mb-3">
-                        Datos Personales
-                    </label>
+    @using (Html.BeginForm("Formulario", "Usuario", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="containersR col-md-6 mb-3">
+                <div class="">
+                    <div class="row">
+                        @Html.HiddenFor(model => model.IdUsuario)
 
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Nombre" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido Paterno" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = "Apellido Materno" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", placeholder = "Fecha de nacimiento" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
-                        </div>
-                    </div>
-                    <div class="col-md-6 pt-2 ps-5">
-                        <div class="form-check form-check-inline">
-                            @Html.RadioButtonFor(model => model.Sexo, "Ma", new { @class = "form-check-input" }) Hombre
-                        </div>
-                        <div class="form-check form-check-inline">
-                            @Html.RadioButtonFor(model => model.Sexo, "Fe", new { @class = "form-check-input" }) Mujer
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", placeholder = "Telefono" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", placeholder = "Celular" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check form-switch col-md-2 ms-4 mt-3" style="text-align: center;">
-                            @if (Model.IdUsuario > 0)
-                            {
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked="@Model.Estatus" disabled>
-                                    <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
-                                    <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class=" input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
-                            @Html.TextBoxFor(model => model.CURP, new { @class = "form-control", placeholder = "Curp" })
-                        </div>             
-                </div>
-                    <div class="col-xxl-6" >
-                        <div class="row">
-                            <label class="col-md-12 text-center mb-3 mt-3">
-                                Direccion
-                            </label>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", placeholder = "Calle" })
-                                </div>
+                        <label class="text-center col-12 mb-3">
+                            Datos Personales
+                        </label>
+
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Nombre" })
                             </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", placeholder = "NumeroExterior" })
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido Paterno" })
                             </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", placeholder = "NumeroInterior" })
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = "Apellido Materno" })
                             </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-control", placeholder = "Colonia" })
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", placeholder = "Fecha de nacimiento" })
                             </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Rol.IdRol, new { @class = "form-control", placeholder = "Rol" })
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 pt-2 ps-5">
+                            <div class="form-check form-check-inline">
+                                @Html.RadioButtonFor(model => model.Sexo, "Ma", new { @class = "form-check-input" }) Hombre
+                            </div>
+                            <div class="form-check form-check-inline">
+                                @Html.RadioButtonFor(model => model.Sexo, "Fe", new { @class = "form-check-input" }) Mujer
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", placeholder = "Telefono" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", placeholder = "Celular" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch col-md-2 ms-4 mt-3" style="text-align: center;">
+                                @if (Model.IdUsuario > 0)
+                                {
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked="@Model.Estatus" disabled>
+                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
+                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                @Html.TextBoxFor(model => model.CURP, new { @class = "form-control", placeholder = "Curp" })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 10px;" class="col-md-12 mt-4">
+            <div class=" col-md-5">
+                <div class="containersL col-md-6">
+                    <div class="">
+                        <div class="col-xxl-6">
+                            <div class="row">
+                                <label class="col-md-12 text-center mb-3">
+                                    Direccion
+                                </label>
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", placeholder = "Calle" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", placeholder = "NumeroExterior" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", placeholder = "NumeroInterior" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-control", placeholder = "Colonia" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Rol.IdRol, new { @class = "form-control", placeholder = "Rol" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 @if (Model.IdUsuario > 0)
                 {
                     <button type="submit" class="btn btn-success" id="miboton">
@@ -165,7 +173,7 @@
                     <i class="fa-solid fa-arrow-left-long"></i> Regresar
                 </a>
             </div>
-
-        }
-    </div>
+        </div>
+       
+         }
 </div>

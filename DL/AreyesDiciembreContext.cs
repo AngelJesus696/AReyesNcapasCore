@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using static DL.DTOs;
-
 namespace DL;
 
 public partial class AreyesDiciembreContext : DbContext
@@ -15,8 +13,8 @@ public partial class AreyesDiciembreContext : DbContext
         : base(options)
     {
     }
-    public virtual DbSet<DTOs.UsuarioGetAllDTO> UsuarioGetAllDTO { get; set; }
-    public virtual DbSet<DTOs.UsuarioGetByIdDTO> UsuarioGetByIdDTO { get; set; }
+    public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTO { get; set; }
+    public virtual DbSet<UsuarioGetByIdDTO> UsuarioGetByIdDTO { get; set; }
     public virtual DbSet<Colonium> Colonia { get; set; }
 
     public virtual DbSet<Direccion> Direccions { get; set; }
