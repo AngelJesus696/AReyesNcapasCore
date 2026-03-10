@@ -27,7 +27,7 @@ namespace BL
                             usuario.IdUsuario = usuarioObj.IdUsuario;
                             usuario.Nombre = usuarioObj.UsuarioNombre;
                             usuario.ApellidoPaterno = usuarioObj.ApellidoPaterno;
-                            usuario.ApellidoPaterno = usuarioObj.ApellidoPaterno;
+                            usuario.ApellidoMaterno = usuarioObj.ApellidoMaterno;
                             usuario.FechaNacimiento = usuarioObj.FechaNacimiento;
                             usuario.UserName = usuarioObj.UserName;
                             usuario.Password = usuarioObj.Password;
@@ -41,6 +41,32 @@ namespace BL
                             usuario.Rol = new ML.Rol();
                             usuario.Rol.Nombre = usuarioObj.RolNombre;
 
+                            var listaDIrecciones = context.DireccionByIdUsuarioDTO.FromSqlRaw($"EXEC DireccionByIdUsuario {usuarioObj.IdUsuario}").ToList();
+                            if(listaDIrecciones.Count > 0)
+                            {
+                                usuario.Direccion = new ML.Direccion();
+                                usuario.Direccion.Direcciones = new List<object>();
+
+                                foreach (var direccionObj in listaDIrecciones)
+                                {
+                                    ML.Direccion direccion= new ML.Direccion();
+                                    direccion.Calle = direccionObj.Calle;
+                                    direccion.NumeroExterior = direccionObj.NumeroExterior;
+                                    direccion.NumeroInterior = direccionObj.NumeroInterior;
+
+                                    direccion.Colonia = new ML.Colonia();
+                                    direccion.Colonia.Nombre = direccionObj.ColoniaNombre;
+                                    direccion.Colonia.CodigoPostal = direccionObj.CodigoPostal;
+
+                                    direccion.Colonia.Municipio = new ML.Municipio();
+                                    direccion.Colonia.Municipio.Nombre = direccionObj.MunicipioNombre;
+
+                                    direccion.Colonia.Municipio.Estado = new ML.Estado();
+                                    direccion.Colonia.Municipio.Estado.Nombre = direccionObj.EstadoNombre;
+
+                                    usuario.Direccion.Direcciones.Add(direccion);
+                                }
+                            }
                             result.Objects.Add(usuario);
                         }
                         result.Correct = true;
@@ -67,10 +93,7 @@ namespace BL
 
                     if (Usuarios != null)
                     {
-                        result.Objects = new List<object>();
-
                         ML.Usuario usuario = new ML.Usuario();
-
 
                         usuario.IdUsuario = Usuarios.IdUsuario;
                         usuario.Nombre = Usuarios.UsuarioNombre;
@@ -90,22 +113,33 @@ namespace BL
                         usuario.Rol = new ML.Rol();
                         usuario.Rol.IdRol = Usuarios.IdRol.Value;
 
-                        usuario.Direccion = new ML.Direccion();
-                        usuario.Direccion.IdDireccion = Usuarios.IdDireccion;
-                        usuario.Direccion.Calle = Usuarios.Calle;
-                        usuario.Direccion.NumeroExterior = Usuarios.NumeroExterior;
-                        usuario.Direccion.NumeroInterior = Usuarios.NumeroInterior;
+                        var listaDIrecciones = context.DireccionByIdUsuarioDTO.FromSqlRaw($"EXEC DireccionByIdUsuario {Usuarios.IdUsuario}").ToList();
+                        if (listaDIrecciones.Count > 0)
+                        {
+                            usuario.Direccion = new ML.Direccion();
+                            usuario.Direccion.Direcciones = new List<object>();
 
-                        usuario.Direccion.Colonia = new ML.Colonia();
-                        usuario.Direccion.Colonia.IdColonia = Usuarios.IdColonia;
-                        usuario.Direccion.Colonia.CodigoPostal = Usuarios.CodigoPostal;
+                            foreach (var direccionObj in listaDIrecciones)
+                            {
+                                ML.Direccion direccion = new ML.Direccion();
+                                direccion.IdDireccion = direccionObj.IdDireccion;
+                                direccion.Calle = direccionObj.Calle;
+                                direccion.NumeroExterior = direccionObj.NumeroExterior;
+                                direccion.NumeroInterior = direccionObj.NumeroInterior;
 
-                        usuario.Direccion.Colonia.Municipio = new ML.Municipio();
-                        usuario.Direccion.Colonia.Municipio.IdMunicipio = Usuarios.IdMunicipio;
+                                direccion.Colonia = new ML.Colonia();
+                                direccion.Colonia.Nombre = direccionObj.ColoniaNombre;
+                                direccion.Colonia.CodigoPostal = direccionObj.CodigoPostal;
 
-                        usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
-                        usuario.Direccion.Colonia.Municipio.Estado.IdEstado = Usuarios.IdEstado;
+                                direccion.Colonia.Municipio = new ML.Municipio();
+                                direccion.Colonia.Municipio.Nombre = direccionObj.MunicipioNombre;
 
+                                direccion.Colonia.Municipio.Estado = new ML.Estado();
+                                direccion.Colonia.Municipio.Estado.Nombre = direccionObj.EstadoNombre;
+
+                                usuario.Direccion.Direcciones.Add(direccion);
+                            }
+                        }
                         result.Object = usuario;
                         result.Correct = true;
                     }

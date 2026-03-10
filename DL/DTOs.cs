@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,14 +67,18 @@ namespace DL
             public string? CURP { get; set; }
             public byte[]? Imagen { get; set; }
             public int? IdRol { get; set; }
-            public int? IdDireccion { get; set; }
-            public string? Calle { get; set; }
-            public string? NumeroExterior { get; set; }
-            public string? NumeroInterior { get; set; }
-            public int? IdColonia { get; set; }
-            public string? CodigoPostal { get; set; }
-            public int? IdMunicipio { get; set; }
-            public int? IdEstado { get; set; }
         }
+    public class DireccionByIdUsuarioDTO
+    {
+        public int IdDireccion { get; set; }
+        public string? Calle { get; set; }
+        public string? NumeroExterior { get; set; }
+        public string? NumeroInterior { get; set; }
+        public string? CodigoPostal { get; set; }
+        public string? ColoniaNombre { get; set; }
+        public string? MunicipioNombre { get; set; }
+        public string? EstadoNombre { get; set; }
+    }
+    
     
 }
