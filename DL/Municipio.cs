@@ -9,7 +9,6 @@ public partial class Municipio
 
     public string Nombre { get; set; } = null!;
 
-    public int IdEstado { get; set; }
 
     public virtual ICollection<Colonium> Colonia { get; set; } = new List<Colonium>();
 
