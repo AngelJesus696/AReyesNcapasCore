@@ -117,10 +117,12 @@ namespace BL
                         if (listaDIrecciones.Count > 0)
                         {
                             usuario.Direccion = new ML.Direccion();
-                            usuario.Direccion.Direcciones = new List<object>();
+                            //usuario.Direccion.Direcciones = new List<object>();
+                            result.Objects = new List<object>();
 
                             foreach (var direccionObj in listaDIrecciones)
                             {
+                                
                                 ML.Direccion direccion = new ML.Direccion();
                                 direccion.IdDireccion = direccionObj.IdDireccion;
                                 direccion.Calle = direccionObj.Calle;
@@ -133,11 +135,13 @@ namespace BL
 
                                 direccion.Colonia.Municipio = new ML.Municipio();
                                 direccion.Colonia.Municipio.Nombre = direccionObj.MunicipioNombre;
+                                direccion.Colonia.Municipio.IdMunicipio = direccionObj.IdMunicipio;
 
                                 direccion.Colonia.Municipio.Estado = new ML.Estado();
                                 direccion.Colonia.Municipio.Estado.Nombre = direccionObj.EstadoNombre;
+                                direccion.Colonia.Municipio.Estado.IdEstado = direccionObj.IdEstado;
 
-                                usuario.Direccion.Direcciones.Add(direccion);
+                                result.Objects.Add(direccion);
                             }
                         }
                         result.Object = usuario;
@@ -189,16 +193,38 @@ namespace BL
                 using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
                 {
 
-                    var filasAfectadas = context.Database.ExecuteSqlInterpolated($"EXEC UsuarioAdd @Nombre={usuario.Nombre}, @ApellidoPaterno={usuario.ApellidoPaterno}, @ApellidoMaterno={usuario.ApellidoMaterno}, @FechadeNacimiento={usuario.FechaNacimiento}, @UserName={usuario.UserName}, @Password={usuario.Password},@Email={usuario.Email}, @Sexo={usuario.Sexo}, @Telefono={usuario.Telefono}, @Celular={usuario.Celular}, @Estatus={usuario.Estatus}, @Curp={usuario.CURP}, @Imagen={usuario.Imagen ?? Array.Empty<byte>()}, @IdRol={usuario.Rol?.IdRol}, @Calle={usuario.Direccion?.Calle}, @NumeroExterior={usuario.Direccion?.NumeroExterior}, @NumeroInterior={usuario.Direccion?.NumeroInterior}, @IdColonia={usuario.Direccion?.Colonia?.IdColonia}");
-
-                    if (filasAfectadas > 0)
+                    var IdusuarioOUTPUT = new SqlParameter("IdUsuario", System.Data.SqlDbType.Int)
                     {
-                        result.Correct = true;
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+                    if(usuario.Estatus == null)
+                    {
+                        usuario.Estatus = true;
                     }
-                    else
+                    var parametros = new[]
                     {
-                        result.Correct = false;
-                        result.ErrorMessage = "No se puedo agregar";
+                          new SqlParameter("@Nombre", usuario.Nombre),
+                            new SqlParameter("@ApellidoPaterno", usuario.ApellidoPaterno),
+                            new SqlParameter("@ApellidoMaterno", usuario.ApellidoMaterno),
+                            new SqlParameter("@FechadeNacimiento", usuario.FechaNacimiento),
+                            new SqlParameter("@UserName", usuario.UserName),
+                            new SqlParameter("@Password", usuario.Password),
+                            new SqlParameter("@Email", usuario.Email),
+                            new SqlParameter("@Sexo", usuario.Sexo),
+                            new SqlParameter("@Telefono", usuario.Telefono),
+                            new SqlParameter("@Celular", usuario.Celular),
+                            new SqlParameter("@Estatus", usuario.Estatus.Value ? 1 : 0),
+                            new SqlParameter("@Curp", usuario.CURP),
+                            new SqlParameter("@IdRol", usuario.Rol?.IdRol),
+                            new SqlParameter("@Imagen", usuario.Imagen ?? Array.Empty<byte>()),
+                            IdusuarioOUTPUT
+                    };
+                    context.Database.ExecuteSqlRaw("EXEC UsuariosAdd @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechadeNacimiento,@UserName, @Password, @Email, @Sexo, @Telefono, @Celular, @Estatus, @Curp, @IdRol, @Imagen, @IdUsuario OUTPUT", parametros);
+
+                    if (IdusuarioOUTPUT != null)
+                    {
+                        result.Object = (int)IdusuarioOUTPUT.Value;
+                        result.Correct = true;
                     }
                 }
             }
@@ -218,7 +244,7 @@ namespace BL
                 using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
                 {
 
-                    var filasAfectadas = context.Database.ExecuteSql($"EXEC UsuarioUpdate @IdUsuario={usuario.IdUsuario}, @Nombre={usuario.Nombre}, @ApellidoPaterno={usuario.ApellidoPaterno}, @ApellidoMaterno={usuario.ApellidoMaterno}, @FechadeNacimiento={usuario.FechaNacimiento}, @UserName={usuario.UserName}, @Password={usuario.Password},@Email={usuario.Email}, @Sexo={usuario.Sexo}, @Telefono={usuario.Telefono}, @Celular={usuario.Celular}, @Estatus={usuario.Estatus}, @Curp={usuario.CURP}, @Imagen={usuario.Imagen ?? Array.Empty<byte>()}, @IdRol={usuario.Rol?.IdRol},@IdDireccion={usuario.Direccion?.IdDireccion}, @Calle={usuario.Direccion?.Calle}, @NumeroExterior={usuario.Direccion?.NumeroExterior}, @NumeroInterior={usuario.Direccion?.NumeroInterior}, @IdColonia={usuario.Direccion?.Colonia?.IdColonia}");
+                    var filasAfectadas = context.Database.ExecuteSql($"EXEC UsuarioUpdate @IdUsuario={usuario.IdUsuario}, @Nombre={usuario.Nombre}, @ApellidoPaterno={usuario.ApellidoPaterno}, @ApellidoMaterno={usuario.ApellidoMaterno}, @FechadeNacimiento={usuario.FechaNacimiento}, @UserName={usuario.UserName}, @Password={usuario.Password},@Email={usuario.Email}, @Sexo={usuario.Sexo}, @Telefono={usuario.Telefono}, @Celular={usuario.Celular}, @Estatus={usuario.Estatus}, @Curp={usuario.CURP}, @Imagen={usuario.Imagen ?? Array.Empty<byte>()}, @IdRol={usuario.Rol?.IdRol}");
 
                     if (filasAfectadas > 0)
                     {

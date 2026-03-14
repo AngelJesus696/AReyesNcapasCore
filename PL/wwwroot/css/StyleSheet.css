@@ -40,11 +40,15 @@
     border-radius: 20px;
     width: 600px;
     /*width: 800px;*/
-    height: 100%;
+    height: 500px; /* 👈 altura fija */
     --color1: rgb(108, 231, 221);
     --color2: rgb(250, 255, 178);
     background-color: aliceblue;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.tabla-wrapper {
+    overflow-x: auto; /* 👈 activa la barra de scroll */
+    max-height: 350px;
 }
 .containerD {
     padding-left: 0px;
@@ -89,5 +93,20 @@
     justify-content: center;*/ /* O flex-start, flex-end, space-between, space-around */
     /*height: 150px;*/
     /*gap: 10px;*/
-    width: 49   0px;
+    width: 490px;
+}
+
+
+.modal-content{
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 3px solid rgba(255,255,255,0.3);
+    padding: 20px;
+    width: 400px;
+    
+}
+.modal-backdrop.show{
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
 }

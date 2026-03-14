@@ -16,6 +16,9 @@ public partial class AreyesDiciembreContext : DbContext
     public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTO { get; set; }
     public virtual DbSet<UsuarioGetByIdDTO> UsuarioGetByIdDTO { get; set; }
     public virtual DbSet<DireccionByIdUsuarioDTO> DireccionByIdUsuarioDTO { get; set; }
+    public virtual DbSet<MunicipioByIdEstadoDTO> MunicipioByIdEstadoDTO { get; set; }
+    public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTO { get; set; }
+    public virtual DbSet<DireccionGetByIdDTO> DireccionGetByIdDTO { get; set; }
     public virtual DbSet<Colonium> Colonia { get; set; }
 
     public virtual DbSet<Direccion> Direccions { get; set; }
@@ -182,6 +185,21 @@ public partial class AreyesDiciembreContext : DbContext
                  .HasNoKey();
         });
         modelBuilder.Entity<DireccionByIdUsuarioDTO>(entity =>
+        {
+            entity
+                 .HasNoKey();
+        });
+        modelBuilder.Entity<MunicipioByIdEstadoDTO>(entity =>
+        {
+            entity
+                 .HasNoKey();
+        });
+        modelBuilder.Entity<ColoniaGetByIdMunicipioDTO>(entity =>
+        {
+            entity
+                 .HasNoKey();
+        });
+        modelBuilder.Entity<DireccionGetByIdDTO>(entity =>
         {
             entity
                  .HasNoKey();

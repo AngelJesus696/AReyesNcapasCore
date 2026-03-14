@@ -18,7 +18,7 @@
             <div class="containersR col-md-6">
                 <div class="">
                     <div class="row">
-                        @Html.HiddenFor(model => model.IdUsuario)
+                        @Html.HiddenFor(model => model.IdUsuario, new{id="IdHidden"})
 
                         <label class="text-center col-12 mb-4">
                             Datos Personales
@@ -48,7 +48,7 @@
                                 @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", placeholder = "Fecha de nacimiento" })
                             </div>
                         </div>
-                        <div class="col-md-6 pt-2 ps-5">
+                        <div class="col-md-6 mt-0 mb-3 ps-5">
                             <div class="form-check form-check-inline">
                                 @Html.RadioButtonFor(model => model.Sexo, "Ma", new { @class = "form-check-input" }) Hombre
                             </div>
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="form-check form-switch col-md-2 ms-4 mt-3" style="text-align: center;">
+                            <div class="form-check form-switch col-md-2 ms-4 mt-0" style="text-align: center;">
                                 @if (Model.IdUsuario > 0)
                                 {
                                     <div class="form-check form-switch">
@@ -84,7 +84,7 @@
                         <div class="col-md-6">
                             <div class=" input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">@@</span>
-                                @Html.TextBoxFor(model => model.Rol.IdRol, new { @class = "form-control", placeholder = "Rol" })
+                                @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol?.Roles, "IdRol", "Nombre"), "Selecciona un Rol", new { @class = "form-select" })
                             </div>
                         </div>
                     </div>
@@ -148,18 +148,18 @@
                             <label class="col-md-12 text-center mb-3">
                                 Direccion
                             </label>
-                            @if (Model.Direccion?.Direcciones != null)
+                            @if (Model.Direccion?.Direcciones?.Count > 0)
                             {
                                 <div class="col-4">
-                                    <a href="@Url.Action("Formulario", "Usuario", new { IdDireccion = 0 })" class="btn btn-success">
+                                    <a onclick="Modal(0, @Model.IdUsuario)" class="btn btn-success">
                                         <i class="fa-solid fa-user-plus"></i> Agregar
                                     </a>
                                 </div>
-                                
-                                <div class="table-responsive">
+
+                                <div class="tabla-wrapper mt-3">
                                     <table class="table-borderless table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center;">
                                                 <th>Acciones</th>
                                                 <th>Calle</th>
                                                 <th>Numeros</th>
@@ -172,19 +172,20 @@
                                         <tbody>
                                             @foreach (ML.Direccion direccion in Model.Direccion.Direcciones)
                                             {
-                                                <tr>
+                                                <tr style="text-align: center;">
                                                     <td>
-                                                        <a href="@Url.Action("Formulario", "Usuario", new { IdDireccion = direccion.IdDireccion })" class="btn btn-outline-warning me-4 mb-2 ">
-                                                            <i class="fa-solid fa-user-pen"></i> 
+
+                                                        <a class="btn btn-outline-warning me-4 mb-2 ">
+                                                            <i onclick="Modal(@direccion.IdDireccion, @Model.IdUsuario)" class="fa-solid fa-user-pen"></i>
                                                         </a>
-                                                        <a href="@Url.Action("Delete", "Usuario", new { IdDireccion = direccion.IdDireccion })" class="btn btn-outline-danger me-4" onclick="return confirm('Deseas borrar al usuario?');">
-                                                            <i class="fa-solid fa-user-xmark"></i> 
+                                                        <a href="@Url.Action("DeleteDireccion", "Usuario", new { IdDireccion = direccion.IdDireccion, IdUsuarioD = Model.IdUsuario })" class="btn btn-outline-danger me-4" onclick="return confirm('Deseas borrar al usuario?');">
+                                                            <i class="fa-solid fa-user-xmark"></i>
                                                         </a>
                                                     </td>
                                                     <td>@direccion.Calle</td>
                                                     <td>@direccion.NumeroExterior @direccion.NumeroInterior</td>
-                                                    <td>@direccion.Colonia.Nombre</td>
                                                     <td>@direccion.Colonia.CodigoPostal</td>
+                                                    <td>@direccion.Colonia.Nombre</td>
                                                     <td>@direccion.Colonia.Municipio.Nombre</td>
                                                     <td>@direccion.Colonia.Municipio.Estado.Nombre</td>
                                                 </tr>
@@ -196,31 +197,44 @@
                             else
                             {
 
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", placeholder = "Calle" })
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", placeholder = "Calle" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", placeholder = "NumeroExterior" })
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", placeholder = "NumeroExterior" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", placeholder = "NumeroInterior" })
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", placeholder = "NumeroInterior" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class=" input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">@@</span>
-                                    @Html.TextBoxFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-control", placeholder = "Colonia" })
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(Model.Direccion?.Colonia?.Municipio?.Estado?.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @class = "form-select", onchange = "MunicipioGetByIdEstado()", id = "ddlEstado" })
+                                    </div>
                                 </div>
-                            </div>
-                            
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty), "Selecciona un Municipio", new { @class = "form-select", onchange = "ColoniaGetByIdMunicipio()", id = "ddlMunicipio" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@@</span>
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty), "Selecciona una Colonia", new { @class = "form-select", id = "ddlColonia" })
+
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>
@@ -249,3 +263,207 @@
         </div>
     }
 </div>
+<div class="modal" id="MiModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModal">Formulario Dirección</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.Hidden("IdOculto", 0, new { id = "IdDireccionOculto" })
+                    @Html.Hidden("IdOculto", 0, new { id = "IdUsuarioOculto" })
+                    <div class="col-12">
+                        <div class="form-floating mb-2 ">
+                            @Html.TextBox("Calle", "", new { @class = "form-control", id = "floatCalle", placeholder = "Calle" })
+                            <label for="floatCalle">Calle</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            @Html.TextBox("Numero Interior", "", new { @class = "form-control", id = "floatNI", placeholder = "Numero Interior" })
+                            <label for="floatNI">Numero Interior</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            @Html.TextBox("Numero Exterior", "", new { @class = "form-control", id = "floatNE", placeholder = "Numero Exterior" })
+                            <label for="floatNE">Numero Exterior</label>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-2">
+                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(Model.Direccion?.Colonia?.Municipio?.Estado?.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @class = "form-select", onchange = "MunicipioGetByIdEstado()", id = "ddlEstado" })
+                    </div>
+                    <div class="col-6">
+                        <select id="ddlMunicipio" onchange="ColoniaGetByIdMunicipio()" class="form-control mt-2">
+                            <option value="">Selecciona un Municipios</option>
+                        </select>
+                    </div>
+                    <div class="col-6 mx-auto">
+                        <select id="ddlColonia" class="form-control mt-2">
+                            <option value="">Selecciona una Colonia</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="btnDireccion" onclick="AddoUpdate()" class="btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    function MunicipioGetByIdEstado(){
+        var DDLEstado = $('#ddlEstado').val()
+        var DllMunicipio = $('#ddlMunicipio')
+       return $.ajax({
+           type: "GET",
+           url: '@Url.Action("MunicipioGetIdEstado", "Usuario")?IdEstado='+ DDLEstado,
+           success: function(result){
+               if(result.correct){
+                   DllMunicipio.empty()
+                   DllMunicipio.append("<option>Selecciona un Municipio</option>");
+
+                   $.each(result.objects, function(indice, municipio){
+                       DllMunicipio.append("<option value='"+ municipio.idMunicipio + "'>" + municipio.nombre + "</option>");
+                   })
+               }
+           }
+       })
+    }
+    function ColoniaGetByIdMunicipio(){
+        var ddlMunicipio = $('#ddlMunicipio').val()
+        var ddlColonia = $('#ddlColonia')
+        return $.ajax({
+            url:'@Url.Action("ColoniaGetIdMunicipio", "Usuario")?IdMunicipio='+ ddlMunicipio,
+            type: "GET",
+            success: function(result){
+                if(result.correct){
+                    ddlColonia.empty()
+                    ddlColonia.append("<option>Selecciona una Colonia</option>")
+                    $.each(result.objects,function(indice, colonia){
+                        ddlColonia.append("<option value='"+ colonia.idColonia + "'>" + colonia.nombre + "</option>")
+                    })
+
+                }
+            }
+        })
+    }
+    function Modal(IdDireccion, IdUsuario){
+        var InptDireccion = $("#IdDireccionOculto")
+        InptDireccion.val(IdDireccion)
+        var InptCalle = $("#floatCalle")
+        var InptNumE = $("#floatNE")
+        var InptNumI = $("#floatNI")
+        var Modal = $('#MiModal')
+        var titlemodal = $('#titleModal')
+        var DllEstado = $('#ddlEstado')
+        var DllMunicipio = $('#ddlMunicipio')
+        var ddlColonia = $('#ddlColonia')
+        var btnAddoUpdate = $('#btnDireccion')
+
+       if(IdDireccion > 0){
+           $.ajax({
+               type: 'GET',
+               url:'@Url.Action("DireccionGetById", "Usuario")?IdDireccion='+IdDireccion,
+               success: async function(result){
+                if(result.correct){
+                    var Object = result.object
+                    console.log(result.object)
+                    InptCalle.val(Object.calle)
+                    InptNumE.val(Object.numeroExterior)
+                    InptNumI.val(Object.numeroInterior)
+                    DllEstado.val(Object.idEstado)
+                    await MunicipioGetByIdEstado()
+                    DllMunicipio.val(Object.idMunicipio)
+                    await ColoniaGetByIdMunicipio()
+                    ddlColonia.val(Object.idColonia)
+                }
+               }
+           })
+           titlemodal.text("Actualizar Dirección")
+           btnAddoUpdate.text("Actualizar")
+           Modal.modal('show')
+
+       }else{
+           titlemodal.text("Agregar Dirección")
+           InptCalle.val("")
+           InptNumE.val("")
+           InptNumI.val("")
+           DllEstado.val("")
+           DllMunicipio.empty()
+           DllMunicipio.append("<option>Selecciona un Municipio</option>");
+           ddlColonia.empty()
+           ddlColonia.append("<option>Selecciona una Colonia</option>");
+           btnAddoUpdate.text("Agregar")
+           Modal.modal('show')
+       }
+    }
+    function AddoUpdate(){
+        var InptDireccion = $("#IdDireccionOculto").val()
+        var hdIdUsuario = $("#IdHidden").val()
+        let IdUsuario1 = parseInt(hdIdUsuario);
+        var InptCalle = $("#floatCalle").val()
+        var InptNumE = $("#floatNE").val()
+        var InptNumI = $("#floatNI").val()
+        var DllEstado = $('#ddlEstado').val()
+        var DllMunicipio = $('#ddlMunicipio').val()
+        var ddlColonia = $('#ddlColonia').val()
+        var Modal = $('#MiModal')
+        var usuario= {
+            IdUsuario: IdUsuario1,
+            Direccion:{
+                IdDireccion: InptDireccion,
+                Calle: InptCalle,
+                NumeroExterior:InptNumE,
+                NumeroInterior: InptNumI,
+                Colonia:{
+                    IdColonia: ddlColonia
+                }
+            }
+        }
+        console.log(usuario)
+        if(InptDireccion > 0){
+            console.log(InptDireccion)
+            $.ajax({
+                type:'POST',
+                url:'@Url.Action("DireccionUpdate", "Usuario")',
+                data: usuario,
+                success: function(result){
+                    if(result.correct){
+                        Swal.fire({
+                            title: "Direccion Actualizada",
+                            text: "Se cambio con exito",
+                            icon: "success"
+                        });
+                        location.reload();
+                    }
+                }
+            })
+        }else{
+            console.log(IdUsuario1)
+            console.log(InptDireccion)
+            $.ajax({
+                type:'POST',
+                url: '@Url.Action("DireccionAdd", "Usuario")',
+                data: usuario,
+                success:function(result){
+                    console.log(result)
+                    if(result.correct){
+                        Swal.fire({
+                            title: "Direccion Agregada",
+                            text: "Se agrego con exito",
+                            icon: "success"
+                        });
+                        location.reload();
+                        Modal.modal('hide')
+                    }
+                }
+            })
+        }
+    }
+</script>

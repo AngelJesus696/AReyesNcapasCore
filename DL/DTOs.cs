@@ -78,7 +78,33 @@ namespace DL
         public string? ColoniaNombre { get; set; }
         public string? MunicipioNombre { get; set; }
         public string? EstadoNombre { get; set; }
+        public int IdMunicipio { get; set; }
+        public int IdEstado { get; set; }
     }
-    
-    
+    public class MunicipioByIdEstadoDTO
+    {
+        public int IdMunicipio { get; set; }
+
+        public string Nombre { get; set; } = null!;
+    }
+    public class ColoniaGetByIdMunicipioDTO
+    {
+        public int IdColonia { get; set; }
+
+        public string Nombre { get; set; } = null!;
+    }
+    public class DireccionGetByIdDTO
+    {
+        public int IdUsuario { get; set; }
+        public string? Calle { get; set; }
+        public string? NumeroExterior { get; set; }
+        public string? NumeroInterior { get; set; }
+        public string? CodigoPostal { get; set; }
+        public string? ColoniaNombre { get; set; }
+        public string? MunicipioNombre { get; set; }
+        public string? EstadoNombre { get; set; }
+        public int IdColonia { get; set; }
+        public int IdMunicipio { get; set; }
+        public int IdEstado { get; set; }
+    }
 }
