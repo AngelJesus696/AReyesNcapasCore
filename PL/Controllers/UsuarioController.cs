@@ -63,8 +63,17 @@ namespace PL.Controllers
             return View(usuario);
         }
         [HttpPost]
-        public IActionResult Formulario(ML.Usuario usuario)
+        public IActionResult Formulario(ML.Usuario usuario, IFormFile inptimg)
         {
+            if (inptimg != null && inptimg.Length > 0)
+            {
+                using (Stream stream = inptimg.OpenReadStream())
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    stream.CopyTo(memoryStream);
+                    usuario.Imagen = memoryStream.ToArray();
+                }
+            }
             if (usuario.IdUsuario > 0)
             {
                 ML.Result result = BL.Usuario.Update(usuario);
@@ -240,6 +249,11 @@ namespace PL.Controllers
         public JsonResult DireccionUpdate(ML.Usuario usuario)
         {
             ML.Result result = BL.Direccion.Update(usuario);
+            return Json(result);
+        }
+        public JsonResult UpdateStatus(int IdUsuario, bool Status)
+        {
+            ML.Result result = BL.Usuario.UpdateStatus(IdUsuario, Status);
             return Json(result);
         }
 

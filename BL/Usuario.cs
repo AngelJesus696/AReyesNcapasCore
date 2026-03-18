@@ -264,5 +264,36 @@ namespace BL
             }
             return result;
         }
+        public static ML.Result UpdateStatus(int IdUsuario, bool Status)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
+                {
+                    var parametros = new[]
+                    {
+                        new SqlParameter("@IdUsuario",IdUsuario),
+                        new SqlParameter("@Estatus",Status)
+                    };
+                    int filasAfectadas = context.Database.ExecuteSqlRaw("EXEC UsuarioUpdateEstatus @IdUsuario, @Estatus", parametros);
+                    if (filasAfectadas > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "No se encontro el usuario";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                result.Correct = false;
+                result.ErrorMessage = e.Message;
+            }
+            return result;
+        }
     }
 }

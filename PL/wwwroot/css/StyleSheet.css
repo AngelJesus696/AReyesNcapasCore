@@ -33,6 +33,7 @@
 }
 .containersL {
     /*margin-top: 1px;*/
+    margin-right: 12px;
     position: relative;
     padding: 30px;
     display: flex;
@@ -40,7 +41,7 @@
     border-radius: 20px;
     width: 600px;
     /*width: 800px;*/
-    height: 500px; /* 👈 altura fija */
+    height: 350px; /* 👈 altura fija */
     --color1: rgb(108, 231, 221);
     --color2: rgb(250, 255, 178);
     background-color: aliceblue;
@@ -48,7 +49,7 @@
 }
 .tabla-wrapper {
     overflow-x: auto; /* 👈 activa la barra de scroll */
-    max-height: 350px;
+    max-height: 220px;
 }
 .containerD {
     padding-left: 0px;
@@ -87,24 +88,54 @@
     background-color: aliceblue;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
+.contenedorPadre {
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*width: 500px;*/
+}
+.containerImg {
+    margin-top: 16px;
+    /*position: relative;*/
+    padding: 20px;
+    /*display: flex;
+    flex-direction: column;*/
+    border-radius: 20px;
+    width: 100%;
+    height: 250px;
+    background-color: white;
+}
+.img {
+    width: 120px;
+    height: 130px;
+    display: block;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .contenedorBoton {
     /*padding-top: 60px;
     padding-left: 120px;
     justify-content: center;*/ /* O flex-start, flex-end, space-between, space-around */
     /*height: 150px;*/
     /*gap: 10px;*/
-    width: 490px;
+    width: 100%;
+}
+.btnU {
+    /*display: block;*/
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
-.modal-content{
+
+.modal-content {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border-radius: 16px;
     border: 3px solid rgba(255,255,255,0.3);
     padding: 20px;
     width: 400px;
-    
 }
 .modal-backdrop.show{
     background: rgba(0,0,0,0.4);
