@@ -9,14 +9,17 @@ namespace BL
 {
     public class Estado
     {
-        public static ML.Result GetAll()
+        private readonly DL.AreyesDiciembreContext _context;
+        public Estado(DL.AreyesDiciembreContext context)
+        {
+            _context = context;
+        }
+        public ML.Result GetAll()
         {
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
-                    var listaEstados = context.Estados.FromSqlRaw("EXEC EstadoGetAll").ToList();
+                    var listaEstados = _context.Estados.FromSqlRaw("EXEC EstadoGetAll").ToList();
 
                     if (listaEstados.Count > 0)
                     {
@@ -36,7 +39,7 @@ namespace BL
                         result.Correct = false;
                         result.ErrorMessage = "No se encontraron Estados";
                     }
-                }
+                
             }
             catch (Exception ex)
             {

@@ -4,103 +4,212 @@
 *@
 @{
 }
-<link rel="stylesheet" href="~/css/StyleSheet.css" />
+<link rel="stylesheet" href="~/css/StyleSheet1.css" />
 
 
-<div class="container col-12">
+<div class="container">
 
     @using (Html.BeginForm("Formulario", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div class="row">
-            <div class="containersR col-md-6">
-                <div class="">
-                    <div class="row">
-                        @Html.HiddenFor(model => model.IdUsuario, new { id = "IdHidden" })
+        <div class=" mx-auto">
+            <div class="row">
+            <div class="col-md-6 p-0 me-4">
+                <div class="containersR col-md-6" id="ContenedorDatos">
+                    <div class="">
+                        <div class="row">
+                            @Html.HiddenFor(model => model.IdUsuario, new { id = "IdHidden" })
 
-                        <label class="text-center col-12 mb-4">
-                            Datos Personales
-                        </label>
+                            <label class="text-center col-12 mb-3">
+                                Datos Personales
+                            </label>
 
-                        <div class="col-md-6 mt-3">
-                            <div class=" input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="bi bi-person"></i>
-                                </span>
-                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Nombre" })
+                            <div class="col-md-6 mt-1">
+                                <div class=" input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Nombre" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 mt-3">
-                            <div class=" input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="bi bi-person"></i>
-                                </span>
-                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido Paterno" })
+                            <div class="col-md-6 mt-1">
+                                <div class=" input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido Paterno" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class=" input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="bi bi-person"></i>
-                                </span>
-                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = "Apellido Materno" })
+                            <div class="col-md-6">
+                                <div class=" input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = "Apellido Materno" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class=" input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="bi bi-calendar3"></i>
-                                </span>
-                                @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", placeholder = "Fecha de nacimiento" })
+                            <div class="col-md-6">
+                                <div class=" input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="bi bi-calendar3"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", placeholder = "Fecha de nacimiento" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 mt-0 mb-3 ps-5">
-                            <div class="form-check form-check-inline">
-                                @Html.RadioButtonFor(model => model.Sexo, "Ma", new { @class = "form-check-input" }) Hombre
+                            <div class="col-md-12 mt-0 mb-3 d-flex justify-content-center">
+                                <div class="form-check form-check-inline">
+                                    @Html.RadioButtonFor(model => model.Sexo, "Ma", new { @class = "form-check-input" }) Hombre
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    @Html.RadioButtonFor(model => model.Sexo, "Fe", new { @class = "form-check-input" }) Mujer
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline">
-                                @Html.RadioButtonFor(model => model.Sexo, "Fe", new { @class = "form-check-input" }) Mujer
+                            <div class="col-md-12">
+                                <div class=" input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">@@</span>
+                                    @Html.TextBoxFor(model => model.CURP, new { @class = "form-control", placeholder = "Curp" })
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-check form-switch col-md-2 ms-4 mt-0" style="text-align: center;">
-                                @if (Model.IdUsuario > 0)
-                                {
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked="@Model.Estatus" disabled>
-                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
-                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
-                                    </div>
-                                }
+                            <div class="col-md-12">
+                                <div class=" input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="bi bi-person-rolodex"></i>
+                                    </span>
+                                    @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol?.Roles, "IdRol", "Nombre"), "Selecciona un Rol", new { @class = "form-select" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class=" input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">@@</span>
-                                @Html.TextBoxFor(model => model.CURP, new { @class = "form-control", placeholder = "Curp" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class=" input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="bi bi-person-rolodex"></i>
-                                </span>
-                                @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol?.Roles, "IdRol", "Nombre"), "Selecciona un Rol", new { @class = "form-select" })
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <div class="form-check form-switch"  @* style="text-align: center;" *@>
+                                    @if (Model.IdUsuario > 0)
+                                    {
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked="@Model.Estatus" disabled>
+                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
+                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"> Estatus</label>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="containersL col-md-6 mt-3" id="ContenedorDireccion">
+                    <div class="">
+                        <div class="col-xxl-6">
+                            <div class="row">
+                                <label class="col-md-12 text-center mb-3">
+                                    Direccion
+                                </label>
+                                @if (Model.Direccion?.Direcciones?.Count > 0)
+                                {
+                                    <div class="col-7">
+                                        <a onclick="Modal(0, @Model.IdUsuario)" class="btn btn-success">
+                                            <i class="bi bi-geo-alt"></i> Agregar direccion
+                                        </a>
+                                    </div>
+
+                                    <div class="tabla-wrapper mt-3">
+                                        <table class="table-borderless table-hover">
+                                            <thead>
+                                                <tr style="text-align: center;">
+                                                    <th>Acciones</th>
+                                                    <th>Calle</th>
+                                                    <th>Numeros</th>
+                                                    <th>Codigo Postal</th>
+                                                    <th>Colonia</th>
+                                                    <th>Municipio</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (ML.Direccion direccion in Model.Direccion.Direcciones)
+                                                {
+                                                    <tr style="text-align: center;">
+                                                        <td>
+
+                                                            <a class="btn btn-outline-warning me-4 mb-2 ">
+                                                                <i onclick="Modal(@direccion.IdDireccion, @Model.IdUsuario)" class="fa-regular fa-pen-to-square"></i>
+                                                            </a>
+                                                            <a href="@Url.Action("DeleteDireccion", "Usuario", new { IdDireccion = direccion.IdDireccion, IdUsuarioD = Model.IdUsuario })" class="btn btn-outline-danger me-4" onclick="return confirm('Deseas borrar al usuario?');">
+                                                                <i class="bi bi-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td>@direccion.Calle</td>
+                                                        <td>@direccion.NumeroExterior @direccion.NumeroInterior</td>
+                                                        <td>@direccion.Colonia.CodigoPostal</td>
+                                                        <td>@direccion.Colonia.Nombre</td>
+                                                        <td>@direccion.Colonia.Municipio.Nombre</td>
+                                                        <td>@direccion.Colonia.Municipio.Estado.Nombre</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class=" input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <i class="bi bi-signpost"></i>
+                                                </span>
+                                                @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", placeholder = "Calle" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class=" input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                                @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", placeholder = "NumeroExterior" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class=" input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                                @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", placeholder = "NumeroInterior" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class=" input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <i class="bi bi-signpost-split"></i>
+                                                </span>
+                                                @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(Model.Direccion?.Colonia?.Municipio?.Estado?.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @class = "form-select", onchange = "MunicipioGetByIdEstado()", id = "ddlEstado" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class=" input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                                @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty), "Selecciona un Municipio", new { @class = "form-select", onchange = "ColoniaGetByIdMunicipio()", id = "ddlMunicipio" })
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class=" input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">@@</span>
+                                                @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty), "Selecciona una Colonia", new { @class = "form-select", id = "ddlColonia" })
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="col-md-5 p-0">
+            <div class="col-md-5 p-0" id="ContenedorCyCuentayImgBtn">
                 <div class="containersContacto col-6">
                     <div class="col-xxl-6">
-                        <label class="col-md-12 text-center mb-3">
+                        <label class="col-12 text-center mb-3">
                             Contacto
                         </label>
                         <div class="row">
@@ -157,164 +266,57 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="containersL col-md-8 mt-3 ">
-                <div class="">
-                    <div class="col-xxl-6">
+                <div class="col-md-12" id="ContenerdorBtnImg">
+                    <div class="containerImg col-xxl-6">
                         <div class="row">
-                            <label class="col-md-12 text-center mb-3">
-                                Direccion
+                            <label class="col-12 text-center mt-2">
+                                Imagen
                             </label>
-                            @if (Model.Direccion?.Direcciones?.Count > 0)
+                            <div class="col-12 mb-2">
+                                @Html.HiddenFor(model => model.Imagen)
+
+                                @if (Model.Imagen == null || Model.Imagen.Length == 0)
+                                {
+                                    <img class="img" id="imgUsuario" src="https://thumbs.dreamstime.com/b/sin-vector-de-icono-imagen-ning%C3%BAn-s%C3%ADmbolo-disponible-aislado-en-fondo-blanco-adecuado-para-elemento-interfaz-usuario-205805243.jpg" />
+                                }
+                                else
+                                {
+                                    <img class="img" id="imgUsuario" src='data:image/png;base64,@Convert.ToBase64String(Model.Imagen)' />
+                                }
+                            </div>
+                            @Html.TextBox("inptimg", "", new { type = "file", id = "IdfileInput", @class = "form-control", @onchange = "MostrarImagen(this)" })
+                        </div>
+                    </div>
+                    <div class="contenedorBoton col-12 mt-4">
+                        <div class="">
+                            @if (Model.IdUsuario > 0)
                             {
-                                <div class="col-7">
-                                    <a onclick="Modal(0, @Model.IdUsuario)" class="btn btn-success">
-                                        <i class="bi bi-geo-alt"></i> Agregar direccion
-                                    </a>
+                                <div class="btnU col-12">
+                                    <button type="submit" class="btn btn-success w-100" id="miboton">
+                                        <i class="fa-solid fa-user-plus"></i> Actualizar
+                                    </button>
                                 </div>
 
-                                <div class="tabla-wrapper mt-3">
-                                    <table class="table-borderless table-hover">
-                                        <thead>
-                                            <tr style="text-align: center;">
-                                                <th>Acciones</th>
-                                                <th>Calle</th>
-                                                <th>Numeros</th>
-                                                <th>Codigo Postal</th>
-                                                <th>Colonia</th>
-                                                <th>Municipio</th>
-                                                <th>Estado</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (ML.Direccion direccion in Model.Direccion.Direcciones)
-                                            {
-                                                <tr style="text-align: center;">
-                                                    <td>
-
-                                                        <a class="btn btn-outline-warning me-4 mb-2 ">
-                                                            <i onclick="Modal(@direccion.IdDireccion, @Model.IdUsuario)" class="fa-regular fa-pen-to-square"></i>
-                                                        </a>
-                                                        <a href="@Url.Action("DeleteDireccion", "Usuario", new { IdDireccion = direccion.IdDireccion, IdUsuarioD = Model.IdUsuario })" class="btn btn-outline-danger me-4" onclick="return confirm('Deseas borrar al usuario?');">
-                                                            <i class="bi bi-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td>@direccion.Calle</td>
-                                                    <td>@direccion.NumeroExterior @direccion.NumeroInterior</td>
-                                                    <td>@direccion.Colonia.CodigoPostal</td>
-                                                    <td>@direccion.Colonia.Nombre</td>
-                                                    <td>@direccion.Colonia.Municipio.Nombre</td>
-                                                    <td>@direccion.Colonia.Municipio.Estado.Nombre</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
                             }
                             else
                             {
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <div class=" input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="bi bi-signpost"></i>
-                                            </span>
-                                            @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", placeholder = "Calle" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class=" input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">@@</span>
-                                            @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", placeholder = "NumeroExterior" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class=" input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">@@</span>
-                                            @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", placeholder = "NumeroInterior" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class=" input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="bi bi-signpost-split"></i>
-                                            </span>
-                                            @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(Model.Direccion?.Colonia?.Municipio?.Estado?.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @class = "form-select", onchange = "MunicipioGetByIdEstado()", id = "ddlEstado" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class=" input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">@@</span>
-                                            @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty), "Selecciona un Municipio", new { @class = "form-select", onchange = "ColoniaGetByIdMunicipio()", id = "ddlMunicipio" })
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class=" input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon1">@@</span>
-                                            @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty), "Selecciona una Colonia", new { @class = "form-select", id = "ddlColonia" })
-
-                                        </div>
-                                    </div>
-
-
+                                <div class="btnU col-12">
+                                    <button type="submit" class="btn btn-success w-100" id="miboton">
+                                        <i class="fa-solid fa-user-plus"></i> Agregar
+                                    </button>
                                 </div>
                             }
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="containerImg col-12">
-                    <div class="row">
-                        <label class="col-12 text-center mt-2">
-                            Imagen
-                        </label>
-                        <div class="col-12 mb-2">
-                            @Html.HiddenFor(model => model.Imagen)
-
-                            @if(Model.Imagen == null){
-                                <img class="img" id="imgUsuario" src="https://thumbs.dreamstime.com/b/sin-vector-de-icono-imagen-ning%C3%BAn-s%C3%ADmbolo-disponible-aislado-en-fondo-blanco-adecuado-para-elemento-interfaz-usuario-205805243.jpg" />
-                            }
-                            else
-                            {
-                                <img class="img" id="imgUsuario" src='data:image/png;base64,@Convert.ToBase64String(Model.Imagen)' />
-                            }
-                        </div>
-                        @Html.TextBox("inptimg", "", new { type = "file", id = "IdfileInput", @class = "form-control", @onchange = "MostrarImagen(this)" })
-
-                    </div>
-                </div>
-                <div class="contenedorBoton col-12 mt-4">
-                    <div class="">
-                        @if (Model.IdUsuario > 0)
-                        {
-                            <div class="btnU col-12">
-                                <button type="submit" class="btn btn-success w-100" id="miboton">
-                                    <i class="fa-solid fa-user-plus"></i> Actualizar
-                                </button>
+                            <div class="col-12 btnU">
+                                <a class="btn btn-warning w-100 mt-2" onclick="confirmar()">
+                                    <i class="fa-solid fa-arrow-left-long"></i> Regresar
+                                </a>
                             </div>
-
-                        }
-                        else
-                        {
-                            <div class="btnU col-12">
-                                <button type="submit" class="btn btn-success w-100" id="miboton">
-                                    <i class="fa-solid fa-user-plus"></i> Agregar
-                                </button>
-                            </div>
-                        }
-                        <div class="col-12 btnU">
-                            <a class="btn btn-warning w-100 mt-2" onclick="confirmar()">
-                                <i class="fa-solid fa-arrow-left-long"></i> Regresar
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        </div>
     }
 </div>
 <div class="modal" id="MiModal" tabindex="-1">

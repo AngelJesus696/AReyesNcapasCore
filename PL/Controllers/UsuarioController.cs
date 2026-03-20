@@ -7,10 +7,25 @@ namespace PL.Controllers
 {
     public class UsuarioController : Controller
     {
+        private readonly BL.Usuario _usuario;
+        private readonly BL.Rol _rol;
+        private readonly BL.Municipio _municipio;
+        private readonly BL.Estado _estado;
+        private readonly BL.Colonia _colonia;
+        private readonly BL.Direccion _direccion;
+        public UsuarioController(BL.Usuario usuario, BL.Rol rol, BL.Municipio municipio, BL.Estado estado, BL.Colonia colonia, BL.Direccion direccion)
+        {
+            _usuario = usuario;
+            _rol = rol;
+            _municipio = municipio;
+            _estado = estado;
+            _colonia = colonia;
+            _direccion = direccion;
+        }
         public IActionResult GetAll()
         {
             ML.Usuario usuario = new ML.Usuario();
-            ML.Result result = BL.Usuario.GetAll();
+            ML.Result result = _usuario.GetAll();
             usuario.Usuarios = result.Objects;
             return View(usuario);
         }
@@ -23,19 +38,19 @@ namespace PL.Controllers
             usuario.Direccion.Colonia.Municipio = new ML.Municipio();
             usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
 
-            ML.Result resultRoles = BL.Rol.GetAll();
+            ML.Result resultRoles = _rol.GetAll();
             if (resultRoles.Correct)
             {
                 usuario.Rol.Roles = resultRoles.Objects;
             }
-            ML.Result resultEstado = BL.Estado.GetAll();
+            ML.Result resultEstado = _estado.GetAll();
             if(resultEstado.Correct)
             {
                 usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
             }
             if (IdUsuario > 0)
             { 
-                ML.Result result = BL.Usuario.GetById(IdUsuario);
+                ML.Result result = _usuario.GetById(IdUsuario);
                 
                 if (result.Objects == null)
                 {
@@ -76,7 +91,7 @@ namespace PL.Controllers
             }
             if (usuario.IdUsuario > 0)
             {
-                ML.Result result = BL.Usuario.Update(usuario);
+                ML.Result result = _usuario.Update(usuario);
                 if (!result.Correct)
                 {
                     usuario.Rol = new ML.Rol();
@@ -85,12 +100,12 @@ namespace PL.Controllers
                     usuario.Direccion.Colonia.Municipio = new ML.Municipio();
                     usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
 
-                    ML.Result resultRoles = BL.Rol.GetAll();
+                    ML.Result resultRoles = _rol.GetAll();
                     if (resultRoles.Correct)
                     {
                         usuario.Rol.Roles = resultRoles.Objects;
                     }
-                    ML.Result resultEstado = BL.Estado.GetAll();
+                    ML.Result resultEstado = _estado.GetAll();
                     if (resultEstado.Correct)
                     {
                         usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
@@ -101,7 +116,7 @@ namespace PL.Controllers
                 }
                 if(usuario.Direccion != null)
                 {
-                    ML.Result resultDireccion = BL.Direccion.Add(usuario);
+                    ML.Result resultDireccion = _direccion.Add(usuario);
                     if (!resultDireccion.Correct)
                     {
                         usuario.Rol = new ML.Rol();
@@ -110,12 +125,12 @@ namespace PL.Controllers
                         usuario.Direccion.Colonia.Municipio = new ML.Municipio();
                         usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
 
-                        ML.Result resultRoles = BL.Rol.GetAll();
+                        ML.Result resultRoles = _rol.GetAll();
                         if (resultRoles.Correct)
                         {
                             usuario.Rol.Roles = resultRoles.Objects;
                         }
-                        ML.Result resultEstado = BL.Estado.GetAll();
+                        ML.Result resultEstado = _estado.GetAll();
                         if (resultEstado.Correct)
                         {
                             usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
@@ -128,7 +143,7 @@ namespace PL.Controllers
             }
             else
             {
-                ML.Result result = BL.Usuario.Add(usuario);
+                ML.Result result = _usuario.Add(usuario);
                 if (!result.Correct)
                 {
                     usuario.Rol = new ML.Rol();
@@ -137,12 +152,12 @@ namespace PL.Controllers
                     usuario.Direccion.Colonia.Municipio = new ML.Municipio();
                     usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
                     
-                    ML.Result resultRoles = BL.Rol.GetAll();
+                    ML.Result resultRoles = _rol.GetAll();
                     if (resultRoles.Correct)
                     {
                         usuario.Rol.Roles = resultRoles.Objects;
                     }
-                    ML.Result resultEstado = BL.Estado.GetAll();
+                    ML.Result resultEstado = _estado.GetAll();
                     if (resultEstado.Correct)
                     {
                         usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
@@ -154,7 +169,7 @@ namespace PL.Controllers
                 if (result.Object != null)
                 {
                     usuario.IdUsuario = (int)result.Object;
-                    ML.Result resultDireccion = BL.Direccion.Add(usuario);
+                    ML.Result resultDireccion = _direccion.Add(usuario);
                     if (!resultDireccion.Correct)
                     {
                         usuario.Rol = new ML.Rol();
@@ -163,12 +178,12 @@ namespace PL.Controllers
                         usuario.Direccion.Colonia.Municipio = new ML.Municipio();
                         usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
 
-                        ML.Result resultRoles = BL.Rol.GetAll();
+                        ML.Result resultRoles = _rol.GetAll();
                         if (resultRoles.Correct)
                         {
                             usuario.Rol.Roles = resultRoles.Objects;
                         }
-                        ML.Result resultEstado = BL.Estado.GetAll();
+                        ML.Result resultEstado = _estado.GetAll();
                         if (resultEstado.Correct)
                         {
                             usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
@@ -189,15 +204,15 @@ namespace PL.Controllers
             direccion.Colonia = new ML.Colonia();
             direccion.Colonia.Municipio = new ML.Municipio();
             direccion.Colonia.Municipio.Estado = new ML.Estado();
-            ML.Result resultRoles = BL.Rol.GetAll();
-            ML.Result resultEstado = BL.Estado.GetAll();
+            ML.Result resultRoles = _rol.GetAll();
+            ML.Result resultEstado = _estado.GetAll();
             if (resultEstado.Correct)
             {
                 direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
             }
             if (IdDireccion > 0)
             {
-                ML.Result result = BL.Direccion.GetByIdDireccion(IdDireccion.Value);
+                ML.Result result = _direccion.GetByIdDireccion(IdDireccion.Value);
                 if (result.Correct)
                 {
                     direccion = (ML.Direccion)result.Object;
@@ -208,47 +223,41 @@ namespace PL.Controllers
            
                 return View(direccion);
         }
-        [HttpPost]
-        public IActionResult FormularioDireccion(ML.Usuario usuario)
-        {
-
-            return RedirectToAction("Formulario",usuario.IdUsuario);
-        }
         public IActionResult Delete(int IdUsuario)
         {
-            ML.Result result = BL.Usuario.Delete(IdUsuario);
+            ML.Result result = _usuario.Delete(IdUsuario);
 
             return RedirectToAction("GetAll");
         }
         public IActionResult DeleteDireccion(int IdDireccion, int IdUsuarioD)
         {
-            ML.Result result = BL.Direccion.Delete(IdDireccion);
+            ML.Result result = _direccion.Delete(IdDireccion);
             return RedirectToAction("Formulario", new { IdUsuario = IdUsuarioD });
         }
 
         public JsonResult MunicipioGetIdEstado(int IdEstado)
         {
-            ML.Result result = BL.Municipio.GetbyIdEstaddo(IdEstado);
+            ML.Result result = _municipio.GetbyIdEstaddo(IdEstado);
             return Json(result);
         }
         public JsonResult ColoniaGetIdMunicipio(int IdMunicipio)
         {
-            ML.Result result = BL.Colonia.GetByIdMunicipio(IdMunicipio);
+            ML.Result result = _colonia.GetByIdMunicipio(IdMunicipio);
             return Json(result);
         }
         public JsonResult DireccionGetById(int IdDireccion)
         {
-            ML.Result result = BL.Direccion.GetByIdDireccion(IdDireccion);
+            ML.Result result = _direccion.GetByIdDireccion(IdDireccion);
             return Json(result);
         }
         public JsonResult DireccionAdd(ML.Usuario usuario)
         {
-            ML.Result result = BL.Direccion.Add(usuario);
+            ML.Result result = _direccion.Add(usuario);
             return Json(result);
         }
         public JsonResult DireccionUpdate(ML.Usuario usuario)
         {
-            ML.Result result = BL.Direccion.Update(usuario);
+            ML.Result result = _direccion.Update(usuario);
             return Json(result);
         }
         public JsonResult UpdateStatus(int IdUsuario, bool Status)

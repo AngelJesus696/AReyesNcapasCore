@@ -9,14 +9,17 @@ namespace BL
 {
     public class Rol
     {
-        public static ML.Result GetAll()
+        private readonly DL.AreyesDiciembreContext _context;
+        public Rol(DL.AreyesDiciembreContext context)
+        {
+            _context = context;
+        }
+        public ML.Result GetAll()
         {
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
-                    var listaRoles = context.Rols.FromSqlRaw("EXEC RolGetAll").ToList();
+                    var listaRoles = _context.Rols.FromSqlRaw("EXEC RolGetAll").ToList();
 
                     if (listaRoles.Count > 0)
                     {
@@ -31,7 +34,6 @@ namespace BL
                         }
                         result.Correct = true;
                     }
-                }
             }
             catch (Exception e)
             {

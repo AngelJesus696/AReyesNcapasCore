@@ -33,9 +33,9 @@ public partial class AreyesDiciembreContext : DbContext
 
     public virtual DbSet<VwUsuarioGetAll> VwUsuarioGetAlls { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("Server=.; Database=AReyesDiciembre; TrustServerCertificate=True; Trusted_Connection=True; User ID=sa; Password=pass@word1;");
+    //    => optionsBuilder.UseSqlServer("Server=.; Database=AReyesDiciembre; TrustServerCertificate=True; Trusted_Connection=True; User ID=sa; Password=pass@word1;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

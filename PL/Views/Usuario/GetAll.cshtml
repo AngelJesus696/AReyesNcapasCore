@@ -72,9 +72,9 @@
                                 </div>
                             </td>
                             <td>
-                                @if (@usuario.Imagen == null)
+                                @if (@usuario.Imagen == null || usuario.Imagen?.Length == 0)
                                 {
-                                    <img id="imagen" src="~/Content/images.png" class="img-fluid" style="width: 190px; height: auto;" />
+                                    <img id="imagen" class="img-fluid" style="width: 190px; height: auto;" src="https://thumbs.dreamstime.com/b/sin-vector-de-icono-imagen-ning%C3%BAn-s%C3%ADmbolo-disponible-aislado-en-fondo-blanco-adecuado-para-elemento-interfaz-usuario-205805243.jpg"   />
                                 }
                                 else
                                 {

@@ -6,15 +6,18 @@ namespace BL
 {
     public class Usuario
     {
-        public static ML.Result GetAll()
+        private readonly DL.AreyesDiciembreContext _context;
+        public Usuario(DL.AreyesDiciembreContext context)
+        {
+            _context = context;
+        }
+        public ML.Result GetAll()
         {
             ML.Result result = new ML.Result();
 
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
-                    var listaUsuarios = context.UsuarioGetAllDTO.FromSqlRaw("EXEC UsuarioGetAll").ToList();
+                    var listaUsuarios = _context.UsuarioGetAllDTO.FromSqlRaw("EXEC UsuarioGetAll").ToList();
 
                     if (listaUsuarios.Count > 0)
                     {
@@ -41,7 +44,7 @@ namespace BL
                             usuario.Rol = new ML.Rol();
                             usuario.Rol.Nombre = usuarioObj.RolNombre;
 
-                            var listaDIrecciones = context.DireccionByIdUsuarioDTO.FromSqlRaw($"EXEC DireccionByIdUsuario {usuarioObj.IdUsuario}").ToList();
+                            var listaDIrecciones = _context.DireccionByIdUsuarioDTO.FromSqlRaw($"EXEC DireccionByIdUsuario {usuarioObj.IdUsuario}").ToList();
                             if(listaDIrecciones.Count > 0)
                             {
                                 usuario.Direccion = new ML.Direccion();
@@ -71,7 +74,6 @@ namespace BL
                         }
                         result.Correct = true;
                     }
-                }
             }
             catch (Exception e)
             {
@@ -80,14 +82,12 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result GetById(int? IdUsuario)
+        public ML.Result GetById(int? IdUsuario)
         {
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
-                    var Usuarios = context.UsuarioGetByIdDTO.FromSql($"EXEC UsuarioGetById @IdUsuario= {IdUsuario}")
+                    var Usuarios = _context.UsuarioGetByIdDTO.FromSql($"EXEC UsuarioGetById @IdUsuario= {IdUsuario}")
                         .AsEnumerable()
                         .SingleOrDefault();
 
@@ -113,7 +113,7 @@ namespace BL
                         usuario.Rol = new ML.Rol();
                         usuario.Rol.IdRol = Usuarios.IdRol.Value;
 
-                        var listaDIrecciones = context.DireccionByIdUsuarioDTO.FromSqlRaw($"EXEC DireccionByIdUsuario {Usuarios.IdUsuario}").ToList();
+                        var listaDIrecciones = _context.DireccionByIdUsuarioDTO.FromSqlRaw($"EXEC DireccionByIdUsuario {Usuarios.IdUsuario}").ToList();
                         if (listaDIrecciones.Count > 0)
                         {
                             usuario.Direccion = new ML.Direccion();
@@ -147,7 +147,7 @@ namespace BL
                         result.Object = usuario;
                         result.Correct = true;
                     }
-                }
+                
             }
             catch (Exception e)
             {
@@ -156,15 +156,13 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result Delete(int IdUsuario)
+        public ML.Result Delete(int IdUsuario)
         {
             ML.Result result = new ML.Result();
 
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
-                    int filasAfectadas = context.Database.ExecuteSql($"EXEC UsuarioDelete @IdUsuario={IdUsuario}");
+                    int filasAfectadas = _context.Database.ExecuteSql($"EXEC UsuarioDelete @IdUsuario={IdUsuario}");
 
                     if (filasAfectadas > 0)
                     {
@@ -175,7 +173,7 @@ namespace BL
                         result.Correct = false;
                         result.ErrorMessage = "No se puedo agregar";
                     }
-                }
+                
             }
             catch (Exception e)
             {
@@ -184,14 +182,12 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result Add(ML.Usuario usuario)
+        public ML.Result Add(ML.Usuario usuario)
         {
             ML.Result result = new ML.Result();
 
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
 
                     var IdusuarioOUTPUT = new SqlParameter("IdUsuario", System.Data.SqlDbType.Int)
                     {
@@ -219,14 +215,14 @@ namespace BL
                             new SqlParameter("@Imagen", usuario.Imagen ?? Array.Empty<byte>()),
                             IdusuarioOUTPUT
                     };
-                    context.Database.ExecuteSqlRaw("EXEC UsuariosAdd @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechadeNacimiento,@UserName, @Password, @Email, @Sexo, @Telefono, @Celular, @Estatus, @Curp, @IdRol, @Imagen, @IdUsuario OUTPUT", parametros);
+                    _context.Database.ExecuteSqlRaw("EXEC UsuariosAdd @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechadeNacimiento,@UserName, @Password, @Email, @Sexo, @Telefono, @Celular, @Estatus, @Curp, @IdRol, @Imagen, @IdUsuario OUTPUT", parametros);
 
                     if (IdusuarioOUTPUT != null)
                     {
                         result.Object = (int)IdusuarioOUTPUT.Value;
                         result.Correct = true;
                     }
-                }
+                
             }
             catch (Exception e)
             {
@@ -235,16 +231,14 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result Update(ML.Usuario usuario)
+        public ML.Result Update(ML.Usuario usuario)
         {
             ML.Result result = new ML.Result();
 
             try
             {
-                using (DL.AreyesDiciembreContext context = new DL.AreyesDiciembreContext())
-                {
 
-                    var filasAfectadas = context.Database.ExecuteSql($"EXEC UsuarioUpdate @IdUsuario={usuario.IdUsuario}, @Nombre={usuario.Nombre}, @ApellidoPaterno={usuario.ApellidoPaterno}, @ApellidoMaterno={usuario.ApellidoMaterno}, @FechadeNacimiento={usuario.FechaNacimiento}, @UserName={usuario.UserName}, @Password={usuario.Password},@Email={usuario.Email}, @Sexo={usuario.Sexo}, @Telefono={usuario.Telefono}, @Celular={usuario.Celular}, @Estatus={usuario.Estatus}, @Curp={usuario.CURP}, @Imagen={usuario.Imagen ?? Array.Empty<byte>()}, @IdRol={usuario.Rol?.IdRol}");
+                    var filasAfectadas = _context.Database.ExecuteSql($"EXEC UsuarioUpdate @IdUsuario={usuario.IdUsuario}, @Nombre={usuario.Nombre}, @ApellidoPaterno={usuario.ApellidoPaterno}, @ApellidoMaterno={usuario.ApellidoMaterno}, @FechadeNacimiento={usuario.FechaNacimiento}, @UserName={usuario.UserName}, @Password={usuario.Password},@Email={usuario.Email}, @Sexo={usuario.Sexo}, @Telefono={usuario.Telefono}, @Celular={usuario.Celular}, @Estatus={usuario.Estatus}, @Curp={usuario.CURP}, @Imagen={usuario.Imagen ?? Array.Empty<byte>()}, @IdRol={usuario.Rol?.IdRol}");
 
                     if (filasAfectadas > 0)
                     {
@@ -255,7 +249,7 @@ namespace BL
                         result.Correct = false;
                         result.ErrorMessage = "No se puedo agregar";
                     }
-                }
+                
             }
             catch (Exception e)
             {
