@@ -3,7 +3,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-
+    int contador = 0;
 }
 <head>
     <meta charset="utf-8">
@@ -37,23 +37,23 @@
                 <tbody>
                     @foreach (ML.Usuario usuario in Model.Usuarios)
                     {
-                       <tr>
-                           <th>
+                        <tr>
+                            <th>
                                 <a href="@Url.Action("Formulario", "Usuario", new { IdUsuario = usuario.IdUsuario })" class="btn btn-warning me-4 mb-2 ">
                                     <i class="fa-solid fa-user-pen"></i> Editar
                                 </a>
                                 <a href="@Url.Action("Delete", "Usuario", new { IdUsuario = usuario.IdUsuario })" class="btn btn-danger me-4" onclick="return confirm('Deseas borrar al usuario?');">
                                     <i class="fa-solid fa-user-xmark"></i> Eliminar
                                 </a>
-                           </th>
+                            </th>
 
                             <td>
                                 <ul style="list-style:none; margin:0; padding:0;">
-                                <li>@usuario.Nombre</li>
-                                <li>@usuario.ApellidoPaterno @usuario.ApellidoMaterno</li>
-                                <li>@usuario.FechaNacimiento</li>
-                                <li>@usuario.Sexo</li>
-                                <li>@usuario.CURP</li>
+                                    <li>@usuario.Nombre</li>
+                                    <li>@usuario.ApellidoPaterno @usuario.ApellidoMaterno</li>
+                                    <li>@usuario.FechaNacimiento</li>
+                                    <li>@usuario.Sexo</li>
+                                    <li>@usuario.CURP</li>
                                 </ul>
                             </td>
                             <td>
@@ -74,7 +74,7 @@
                             <td>
                                 @if (@usuario.Imagen == null || usuario.Imagen?.Length == 0)
                                 {
-                                    <img id="imagen" class="img-fluid" style="width: 190px; height: auto;" src="https://thumbs.dreamstime.com/b/sin-vector-de-icono-imagen-ning%C3%BAn-s%C3%ADmbolo-disponible-aislado-en-fondo-blanco-adecuado-para-elemento-interfaz-usuario-205805243.jpg"   />
+                                    <img id="imagen" class="img-fluid" style="width: 190px; height: auto;" src="https://thumbs.dreamstime.com/b/sin-vector-de-icono-imagen-ning%C3%BAn-s%C3%ADmbolo-disponible-aislado-en-fondo-blanco-adecuado-para-elemento-interfaz-usuario-205805243.jpg" />
                                 }
                                 else
                                 {
@@ -85,19 +85,44 @@
                             @if (usuario.Direccion?.Direcciones != null)
                             {
                                 <td>
-                                    
-                                        @foreach (ML.Direccion direccion in usuario.Direccion.Direcciones)
+                                    @if (usuario.Direccion.Direcciones.Count > 3)
+                                    {
+                                        foreach (ML.Direccion direccion in usuario.Direccion.Direcciones)
                                         {
-                                        <ul style="list-style:none; margin:0; padding:0;">
-                                            <li>@direccion.Calle @direccion.NumeroExterior @direccion.NumeroInterior</li>
-                                            <li>@direccion.Colonia.CodigoPostal @direccion.Colonia.Nombre</li>
-                                            <li>
-                                                @direccion.Colonia.Municipio.Nombre
-                                                @direccion.Colonia.Municipio.Estado.Nombre
-                                            </li>
+                                            if (contador >= 3)
+                                            {
+                                                <ul><li>Etc</li></ul>
+                                                contador = 0;
+                                                break;
+                                            }
+                                            <ul>
+                                                <li>@direccion.Calle @direccion.NumeroExterior @direccion.NumeroInterior</li>
+                                                <li>@direccion.Colonia.CodigoPostal @direccion.Colonia.Nombre</li>
+                                                <li>
+                                                    @direccion.Colonia.Municipio.Nombre
+                                                    @direccion.Colonia.Municipio.Estado.Nombre
+                                                </li>
                                             </ul>
+                                            <br>
+                                            contador++;
                                         }
-                                    
+                                    }
+                                    else
+                                    {
+                                        foreach (ML.Direccion direccion in usuario.Direccion.Direcciones)
+                                        {
+                                            <ul>
+                                                <li>@direccion.Calle @direccion.NumeroExterior @direccion.NumeroInterior</li>
+                                                <li>@direccion.Colonia.CodigoPostal @direccion.Colonia.Nombre</li>
+                                                <li>
+                                                    @direccion.Colonia.Municipio.Nombre
+                                                    @direccion.Colonia.Municipio.Estado.Nombre
+                                                </li>
+                                            </ul>
+                                            <br>
+                                        }
+                                    }
+
                                 </td>
                             }
                             else
@@ -106,7 +131,7 @@
                                     El usuario no tiene ninguna direccion guardada
                                 </td>
                             }
-                        </tr> 
+                        </tr>
                     }
                 </tbody>
             </table>
